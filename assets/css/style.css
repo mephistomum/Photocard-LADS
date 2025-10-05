@@ -1,0 +1,40 @@
+@font-face {
+  font-family: 'MyFont';
+  src: url('/assets/font/austrisademo-woqgw.otf') format('opentype');
+  font-weight: normal;
+  font-style: normal;
+}
+
+/* Optional: make a Tailwind utility */
+.font-austrisa {
+  font-family: 'austrisa';
+}
+
+.ballet-font {
+  font-family: "Ballet", cursive;
+  font-optical-sizing: auto;
+  font-weight: 400;
+  font-style: normal;
+}
+
+
+.neon-text {
+  color: #fffbe8; /* creamy text color */
+  text-shadow: 
+    0 0 5px #fffbe8,
+    0 0 10px #ffe9b0,
+    0 0 20px #ffe9b0,
+    0 0 40px #ffd580,
+    0 0 80px #ffd580,
+    0 0 100px #ffd580,
+    0 0 150px #ffd580;
+  animation: flicker 2.5s infinite alternate;
+}
+
+@keyframes flicker {
+  0%   { opacity: 1; }
+  45%  { opacity: 0.95; }
+  50%  { opacity: 0.85; }
+  55%  { opacity: 0.95; }
+  100% { opacity: 1; }
+}

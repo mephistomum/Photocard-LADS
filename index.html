@@ -1,0 +1,123 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Responsive Photocard Grid</title>
+  <link rel="stylesheet" href="assets/css/style.css">
+  <link rel="stylesheet" href="assets/css/output.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Allan:wght@400;700&family=Ballet:opsz@16..72&family=Rubik+80s+Fade&family=Tangerine:wght@400;700&display=swap" rel="stylesheet">
+  <style>
+    .card {
+      transform-style: preserve-3d;
+      transition: transform 0.6s;
+    }
+    .card.is-flipped {
+      transform: rotateY(180deg);
+    }
+    .card-face {
+      backface-visibility: hidden;
+      -webkit-backface-visibility: hidden;
+    }
+    .card-face.back {
+      transform: rotateY(180deg);
+    }
+
+    .bg-custom {
+  background-image: url('assets/image/background.png');
+
+}
+
+.shadow-white {
+  box-shadow: 8px 8px 18px rgba(255, 255, 255, 0.25);
+}
+  </style>
+</head>
+<body class="min-h-screen flex flex-col items-center p-4 
+             w-full h-screen bg-cover bg-center bg-custom
+             bg-no-repeat bg-center bg-cover">
+
+
+                   <canvas
+  id="meteorCanvas"
+  style="position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
+         pointer-events: none; z-index: 0;"></canvas>
+
+<h1 class="ballet-font neon-text text-white mb-2  pt-4
+           text-4xl sm:text-5xl md:text-6xl lg:text-7xl xl:text-[98px]">
+  Linkon Princesses
+</h1>
+
+<div id="grid"
+     class="grid gap-6 grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 justify-items-center pt-6">
+</div>
+
+
+
+         <script src="meteor.js"></script>
+
+  <script>
+    (function () {
+      const numCards = 12; // change this based on how many pairs you have
+      const grid = document.getElementById("grid");
+
+      function makeCard(index) {
+        const wrapper = document.createElement("div");
+        wrapper.className =
+          // aspect-[ratio] ensures 5.5/8.5 ratio, width scales responsively
+          "relative perspective w-[120px] sm:w-[150px] md:w-[180px] lg:w-[220px] aspect-[55/85]";
+
+        const card = document.createElement("div");
+        card.className =
+          "card relative w-full h-full cursor-pointer transform transition-transform duration-500";
+        card.setAttribute("tabindex", "0");
+
+        // Front
+        const front = document.createElement("div");
+        front.className =
+  "card-face absolute inset-0 rounded-lg overflow-hidden shadow-white";
+        const fimg = document.createElement("img");
+        fimg.src = `assets/image/front/${index}.png`;
+        fimg.alt = `Front of card ${index}`;
+        fimg.className = "w-full h-full object-cover";
+        front.appendChild(fimg);
+
+        // Back
+        const back = document.createElement("div");
+        back.className =
+  "card-face back absolute inset-0 rounded-lg overflow-hidden shadow-white";
+        const bimg = document.createElement("img");
+        bimg.src = `assets/image/back/${index}.png`;
+        bimg.alt = `Back of card ${index}`;
+        bimg.className = "w-full h-full object-cover";
+        back.appendChild(bimg);
+
+        card.appendChild(front);
+        card.appendChild(back);
+        wrapper.appendChild(card);
+
+        // flip on click
+        card.addEventListener("click", () => {
+          card.classList.toggle("is-flipped");
+        });
+
+        // flip on keyboard
+        card.addEventListener("keydown", (e) => {
+          if (e.key === "Enter" || e.key === " ") {
+            e.preventDefault();
+            card.classList.toggle("is-flipped");
+          }
+        });
+
+        return wrapper;
+      }
+
+      for (let i = 1; i <= numCards; i++) {
+        grid.appendChild(makeCard(i));
+      }
+    })();
+  </script>
+</body>
+</html>
