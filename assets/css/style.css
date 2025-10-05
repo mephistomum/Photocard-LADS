@@ -38,3 +38,18 @@
   55%  { opacity: 0.95; }
   100% { opacity: 1; }
 }
+
+
+/* Apply only to the gallery wrapper */
+#albumWrapper {
+  max-height: 80vh;
+  overflow-y: auto;
+
+  /* For Firefox */
+  scrollbar-width: thin;
+  scrollbar-color: rgba(100,100,100,0.6) transparent;
+
+  /* Force overlay scrollbars on Windows */
+  -ms-overflow-style: none; /* IE/Edge Legacy */
+  scrollbar-gutter: stable both-edges; 
+}
