@@ -22,12 +22,12 @@
   color: #fffbe8; /* creamy text color */
   text-shadow: 
     0 0 5px #fffbe8,
-    0 0 10px #ffe9b0,
-    0 0 20px #ffe9b0,
-    0 0 40px #ffd580,
-    0 0 80px #ffd580,
-    0 0 100px #ffd580,
-    0 0 150px #ffd580;
+    0 0 10px #fffdda,
+    0 0 20px #fffdda,
+    0 0 40px #dcf4ff,
+    0 0 80px #f9fdc3,
+    0 0 100px #f9fdc3,
+    0 0 150px #f9fdc3;
   animation: flicker 2.5s infinite alternate;
 }
 
