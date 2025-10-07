@@ -160,7 +160,7 @@
 
   </style>
 </head>
-<audio id="bgm" src="assets/music/love letters.mp3" autoplay loop></audio>
+<audio id="bgm" src="assets/music/love letters.mp3" loop></audio>
 
 <body class="min-h-screen flex flex-col items-center p-4 
              w-full h-screen bg-cover bg-center bg-custom
@@ -184,10 +184,16 @@
   "Keep your heads up princesses, otherwise your tiara will fall"
 </p>
 
-<div class="flex gap-4 mt-4">
+<div class="flex gap-2 mt-4 items-center justify-center">
   <button id="flipAllFront" 
     class="px-4 py-2 bg-white/20 text-white rounded-lg backdrop-blur-sm hover:bg-white/40 transition">
     Flip All to Front
+  </button>
+
+  <!-- 🎵 Music Button -->
+  <button id="playMusic"
+    class="p-2 rounded-full transition transform hover:scale-110">
+    <img id="musicIcon" src="assets/image/music.png" alt="Play Music" class="w-5 h-5 object-contain" />
   </button>
 
   <button id="flipAllBack" 
@@ -294,10 +300,6 @@ front.appendChild(radiantOverlay);
       }
     })();
   </script>
-  <script>
-const bgm = document.getElementById("bgm");
-bgm.volume = 0.5; // 🔉 set volume between 0.0 (mute) and 1.0 (full volume)
-</script>
 
 <script>
   // Wait until all cards are rendered
@@ -322,6 +324,28 @@ bgm.volume = 0.5; // 🔉 set volume between 0.0 (mute) and 1.0 (full volume)
     flipToBackBtn.addEventListener("click", () => flipAll(true));
   });
 </script>
+
+
+<script>
+  const bgm = document.getElementById("bgm");
+  const playButton = document.getElementById("playMusic");
+  const musicIcon = document.getElementById("musicIcon");
+  let isPlaying = false;
+
+  playButton.addEventListener("click", () => {
+    if (!isPlaying) {
+      bgm.volume = 0.4;
+      bgm.play();
+      isPlaying = true;
+      musicIcon.src = "assets/image/music_pause.png"; // replace with your pause icon
+    } else {
+      bgm.pause();
+      isPlaying = false;
+      musicIcon.src = "assets/image/music.png"; // original music note image
+    }
+  });
+</script>
+
 
 </body>
 </html>
