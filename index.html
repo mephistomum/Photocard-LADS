@@ -158,6 +158,53 @@
 
 
 
+
+/* === Custom Glowing Cursor === */
+body, button, .card, * {
+  cursor: none !important;
+}
+
+/* Glowing main cursor */
+#fairyCursor {
+  position: fixed;
+  width: 20px;
+  height: 20px;
+  background: radial-gradient(circle, rgba(255,255,255,0.9) 0%, rgba(173,216,230,0.4) 60%, transparent 80%);
+  border-radius: 50%;
+  pointer-events: none;
+  box-shadow: 0 0 15px 5px rgba(255,255,255,0.6),
+              0 0 25px 10px rgba(173,216,230,0.4),
+              0 0 35px 15px rgba(255,182,255,0.3);
+  z-index: 9999;
+  transform: translate(-50%, -50%);
+  transition: transform 0.05s linear;
+}
+
+/* Fairy dust particles */
+.sparkle {
+  position: fixed;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 9998;
+  background: radial-gradient(circle, rgba(255,255,255,0.9) 0%, rgba(255,192,203,0.6) 60%, transparent 100%);
+  animation: sparkleFade 0.8s ease-out forwards;
+}
+
+/* Particle fade-out animation */
+@keyframes sparkleFade {
+  from {
+    transform: scale(1);
+    opacity: 1;
+  }
+  to {
+    transform: scale(0);
+    opacity: 0;
+  }
+}
+
+
   </style>
 </head>
 <audio id="bgm" src="assets/music/love letters.mp3" loop></audio>
@@ -173,12 +220,12 @@
          pointer-events: none; z-index: 0;"></canvas>
 
 
-<h1 class="ballet-font neon-text text-white mb-2 pt-4
+<h1 class="ballet-font neon-text text-white mb-0 pt-4
            text-[60px] sm:text-[80px] md:text-[90px] xl:text-[98px]">
   Linkon Princesses
 </h1>
 
-<p class="text-white/80 italic tracking-widest text-center mb-6 
+<p class="text-white/80 italic tracking-widest text-center mb-1
            text-[16px] sm:text-[18px] md:text-[20px] 
            font-light glow-text">
   "Keep your heads up princesses, otherwise your tiara will fall"
@@ -214,14 +261,13 @@
 
 
 
-
-
-
          <script src="meteor.js"></script>
 
+
+         
   <script>
     (function () {
-      const numCards = 65; // change this based on how many pairs you have
+      const numCards = 70; // change this based on how many pairs you have
       const grid = document.getElementById("grid");
 
       function makeCard(index) {
@@ -346,6 +392,51 @@ front.appendChild(radiantOverlay);
   });
 </script>
 
+<script>
+  // Create glowing cursor element
+  const fairyCursor = document.createElement("div");
+  fairyCursor.id = "fairyCursor";
+  document.body.appendChild(fairyCursor);
+
+  // Track cursor position
+  window.addEventListener("mousemove", (e) => {
+    fairyCursor.style.left = e.pageX + "px";
+    fairyCursor.style.top = e.pageY + "px";
+
+    // Create fairy dust particles occasionally
+    const sparkle = document.createElement("div");
+    sparkle.className = "sparkle";
+    sparkle.style.left = e.pageX + "px";
+    sparkle.style.top = e.pageY + "px";
+
+    // Random pastel color variation
+    const colors = [
+      "rgba(255,182,193,0.9)",
+      "rgba(173,216,230,0.9)",
+      "rgba(255,255,224,0.9)",
+      "rgba(221,160,221,0.9)",
+      "rgba(240,255,255,0.9)"
+    ];
+    sparkle.style.background = `radial-gradient(circle, ${colors[Math.floor(Math.random()*colors.length)]} 0%, transparent 70%)`;
+
+    document.body.appendChild(sparkle);
+
+    // Random drift direction for fairy dust
+    const driftX = (Math.random() - 0.5) * 30;
+    const driftY = (Math.random() - 0.5) * 30;
+    sparkle.animate([
+      { transform: `translate(0, 0) scale(1)`, opacity: 1 },
+      { transform: `translate(${driftX}px, ${driftY}px) scale(0)`, opacity: 0 }
+    ], {
+      duration: 1000 + Math.random() * 500,
+      easing: "ease-out",
+      fill: "forwards"
+    });
+
+    // Remove sparkle after fade
+    setTimeout(() => sparkle.remove(), 1200);
+  });
+</script>
 
 </body>
 </html>
