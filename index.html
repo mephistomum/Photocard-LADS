@@ -403,50 +403,56 @@ front.appendChild(radiantOverlay);
 </script>
 
 <script>
-  // Create glowing cursor element
-  const fairyCursor = document.createElement("div");
-  fairyCursor.id = "fairyCursor";
-  document.body.appendChild(fairyCursor);
+  // Detect touch devices
+  const isTouchDevice = 'ontouchstart' in window || navigator.maxTouchPoints > 0;
 
-  // Track cursor position
-  window.addEventListener("mousemove", (e) => {
-    fairyCursor.style.left = e.pageX + "px";
-    fairyCursor.style.top = e.pageY + "px";
+  if (!isTouchDevice) {
+    // 💫 Desktop only — enable glowing cursor
+    const fairyCursor = document.createElement("div");
+    fairyCursor.id = "fairyCursor";
+    document.body.appendChild(fairyCursor);
 
-    // Create fairy dust particles occasionally
-    const sparkle = document.createElement("div");
-    sparkle.className = "sparkle";
-    sparkle.style.left = e.pageX + "px";
-    sparkle.style.top = e.pageY + "px";
+    window.addEventListener("mousemove", (e) => {
+      fairyCursor.style.left = e.pageX + "px";
+      fairyCursor.style.top = e.pageY + "px";
 
-    // Random pastel color variation
-    const colors = [
-      "rgba(255,182,193,0.9)",
-      "rgba(173,216,230,0.9)",
-      "rgba(255,255,224,0.9)",
-      "rgba(221,160,221,0.9)",
-      "rgba(240,255,255,0.9)"
-    ];
-    sparkle.style.background = `radial-gradient(circle, ${colors[Math.floor(Math.random()*colors.length)]} 0%, transparent 70%)`;
+      // Create fairy dust particles occasionally
+      const sparkle = document.createElement("div");
+      sparkle.className = "sparkle";
+      sparkle.style.left = e.pageX + "px";
+      sparkle.style.top = e.pageY + "px";
 
-    document.body.appendChild(sparkle);
+      const colors = [
+        "rgba(255,182,193,0.9)",
+        "rgba(173,216,230,0.9)",
+        "rgba(255,255,224,0.9)",
+        "rgba(221,160,221,0.9)",
+        "rgba(240,255,255,0.9)"
+      ];
+      sparkle.style.background = `radial-gradient(circle, ${colors[Math.floor(Math.random() * colors.length)]} 0%, transparent 70%)`;
 
-    // Random drift direction for fairy dust
-    const driftX = (Math.random() - 0.5) * 30;
-    const driftY = (Math.random() - 0.5) * 30;
-    sparkle.animate([
-      { transform: `translate(0, 0) scale(1)`, opacity: 1 },
-      { transform: `translate(${driftX}px, ${driftY}px) scale(0)`, opacity: 0 }
-    ], {
-      duration: 1000 + Math.random() * 500,
-      easing: "ease-out",
-      fill: "forwards"
+      document.body.appendChild(sparkle);
+
+      const driftX = (Math.random() - 0.5) * 30;
+      const driftY = (Math.random() - 0.5) * 30;
+      sparkle.animate([
+        { transform: `translate(0, 0) scale(1)`, opacity: 1 },
+        { transform: `translate(${driftX}px, ${driftY}px) scale(0)`, opacity: 0 }
+      ], {
+        duration: 1000 + Math.random() * 500,
+        easing: "ease-out",
+        fill: "forwards"
+      });
+
+      setTimeout(() => sparkle.remove(), 1200);
     });
-
-    // Remove sparkle after fade
-    setTimeout(() => sparkle.remove(), 1200);
-  });
+  } else {
+    // 📱 Touch device — hide cursor completely
+    document.body.style.cursor = "auto"; // restore default cursor
+    document.querySelectorAll("*").forEach(el => el.style.cursor = "auto");
+  }
 </script>
+
 
 </body>
 </html>
